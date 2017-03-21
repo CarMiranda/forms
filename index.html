@@ -68,55 +68,119 @@
         </style>
         <script>
             function addSection() {
+                "use strict";
+                
+                // Variables declaration
+                var theForm, theSection, theTitle, theDescription, hlscont;
+                
+                // Section counter (private variable)
                 addSection.cnt = ++addSection.cnt || 1;
-                var theForm = document.getElementById("right-container"), aChild = document.createElement("fieldset"), theDescription = document.createElement("div"), aCheck = document.createElement("input");
                 
+                // Variable initialization
+                theForm = document.getElementById("right-container"); // Form container
+                theSection = document.createElement("section"); // New section element for the new section
+                theTitle = document.createElement("textarea"); // New textarea element for the new title
+                theDescription = document.createElement("textarea"); // New textarea element for the new description
+                hlscont = document.getElementById("hls-container"); // Highlight section container
+                
+                // Setting the titles attributes
+                theTitle.id = "section-title" + addSection.cnt;
+                theTitle.setAttribute("placeholder", "Title");
+                
+                // Setting the description attributes
                 theDescription.id = "section-description" + addSection.cnt;
-                theDescription.innerHTML = document.getElementById("section-description").value;
+                theDescription.setAttribute("placeholder", "Description (optional)");
                 
-                aChild.id = "section" + addSection.cnt;
-                aChild.innerHTML = "<legend>" + document.getElementById("section-title").value + "</legend>";
-                aChild.appendChild(theDescription);
+                // Setting the new section attributes and appending title and description
+                theSection.id = "section" + addSection.cnt;
+                theSection.appendChild(theTitle);
+                theSection.innerHTML += "<br>";
+                theSection.appendChild(theDescription);
                 
-                theForm.appendChild(aChild);
-                document.getElementById("section-title").value = "";
-                document.getElementById("section-description").value = "";
+                // Adding section to hls section and changing the current highlighted section to the new section
+                hlscont.innerHTML += "<label for='hls" + addSection.cnt + "'>" + addSection.cnt + "</label> : <input type='radio' name='hls' id='hls'" + addSection.cnt + "' value='" + addSection.cnt + "' checked />";
                 
-               document.getElementById("hls-container").innerHTML += "<label for='hls" + addSection.cnt + "'>" + addSection.cnt + "</label> : <input type='radio' name='hls' id='hls'" + addSection.cnt + "' value='" + addSection.cnt + "' checked />";
+                // Bind the section to onclick event
+                theSection.addEventListener("onclick", function () {highlight(addSection.cnt);});
+                
+                // Appending to the container
+                theForm.appendChild(theSection);
+                theForm.innerHTML += "<hr>";
+                
+                // Adding a question to the section
+                addQuestion();
             }
             
-            function addTextInput() {
+            function addQuestion() {
+                var sNb = getHLS();
+                theSection = document.getElementById("section" + sNb);
+                theContainer = document.createElement("div");
+                theQuestion = document.createElement("textarea");
+                theAnswer = document.createElement("div");
+                theLabel = document.createElement("textarea");
+                qNb = theSection.children.length - 2;
+                
+                theContainer.id = "qcont" + sNb + qNb;
+                
+                theQuestion.id = "question" + sNb + qNb;
+                theQuestion.setAttribute("placeholder", "Question");
+                
+                theAnswer.id = "answer" + sNb + qNb + 1;
+                theAnswer.style.cssText = "width: 10px; height: 10px; border: 1px solid black; border-radius: 5px; vertical-align: middle; display: inline-block;";
+                theAnswer.setAttribute("value", "opt1");
+                
+                theLabel.id = "label" + sNb + qNb + 1;
+                theLabel.style.cssText = "vertical-align: middle;";
+                theLabel.innerHTML = "Option 1";
+                
+                theContainer.appendChild(theQuestion);
+                theContainer.innerHTML += "<br>";
+                theContainer.appendChild(theAnswer);
+                theContainer.appendChild(theLabel);
+                theSection.appendChild(theContainer);
                 
             }
             
+            function addTitle() {
+                
+            }
+            
+            function addImage() {
+                
+            }
+            
+            function addVideo() {
+                
+            }
+            
+            function getHLS() {
+                "use strict";
+                var i = 0, sections;
+                sections = document.getElementById("hls-container").getElementsByTagName("input");
+                while (!(sections[i].checked) && i < sections.length) ++i;
+                return (i >= sections.length ? -1 : i + 1);
+            }
+            
+            function highlight(sNb) {
+                document.getElementById("hls" + sNb).checked = true;
+            }
         </script>
         
     </head>
-    <body>
+    <body onload="addSection();">
         <div id="container">
             <div id="left-container">
                 <h1>&Eacute;l&eacute;ments</h1>
                 <div style="position: relative; float: left; width: 90%; left: 5%;">
-                    <details style="background-color: #FFF; border-radius: 5px;" id="new-section-title">
-                        <summary style="background-color: #C8C8C8; width: inherit; border-radius: 5px 5px 0 0;">
-                            Add new section
-                        </summary>
-                        <label for="section-title">Title</label> : <input type="text" id="section-title" placeholder="Title" required />
-                        <br>
-                        <label for="section-description">Description</label> : <textarea id="section-description" style="vertical-align: top;"></textarea>
-                        <br>
-                        <input type="button" style="float: right;" onclick="addSection();" value="ADD" />
-                    </details>
-                    <details style="background-color: #FFF; border-radius: 5px;" id="new-text-title">
-                        <summary style="background-color: #C8C8C8; width: inherit; border-radius: 5px 5px 0 0;">
-                            Add new text input
-                        </summary>
-                        <label for="text-label">Label</label> : <input type="text" id="section-title" placeholder="Title" required />
-                        <br>
-                        <label for="section-description">Description</label> : <textarea id="section-description" style="vertical-align: top;"></textarea>
-                        <br>
-                        <input type="button" style="float: right;" onclick="addSection();" value="ADD" />
-                    </details>
+                    <button type="button" onclick="addSection();">+ Add Section</button>
+                    <br>
+                    <button type="button" onclick="addQuestion();">+ Add Question</button>
+                    <br>
+                    <button type="button" onclick="addTitle();">+ Add Title and Description</button>
+                    <br>
+                    <button type="button" onclick="addImage();">+ Add Image</button>
+                    <br>
+                    <button type="button" onclick="addVideo();">+ Add Video</button>
                 </div>
             </div>
             <div id="right-container">
