@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+
+<html>
+    
+    <head>
+        <meta charset="utf-8" />
+        <meta name="description" content="Creation de formulaires AJIR" />
+        <meta name="kerywords" content="AJIR,Junior-Entreprise,INSA,ROUEN,FORMULAIRES" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Creation de formulaire | Association Junior-Entreprise de l'INSA de Rouen</title>
+        <!--
+        <link rel="stylesheet" type="text/css" href="../stylesheets/.css" />
+        <link rel="stylesheet" type="text/css" href="../stylesheets/.css" /> 
+        <link rel="icon" type="image/png" href="../media/.png" />
+        -->
+        <style>
+            #container {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                left: 0;
+                top: 0;
+            }
+            
+            #left-container {
+                position: relative;
+                float: left;
+                width: 30%;
+                height: inherit;
+                background-color: #004361;
+            }
+            
+            #right-container {
+                position: relative;
+                float: right;
+                width: 70%;
+                height: inherit;
+                background-color: #FFFFFF;
+            }
+            
+            h1 {
+                width: inherit; margin: 10px auto;
+                color: #C8C8C8;
+            }
+            
+            summary::-webkit-details-marker {
+                display: none;
+            }
+            
+            summary:before {
+                content: "+";
+            }
+            
+            details[open] summary:before {
+                content: "-";
+            }
+            
+            details > * {
+                padding-left: 5px;  
+                margin-bottom: 10px ;
+            }
+            
+            #hls-container {
+                display: inline-block;
+                position: absolute;
+                bottom: 0;
+            }
+        </style>
+        <script>
+            function addSection() {
+                addSection.cnt = ++addSection.cnt || 1;
+                var theForm = document.getElementById("right-container"), aChild = document.createElement("fieldset"), theDescription = document.createElement("div"), aCheck = document.createElement("input");
+                
+                theDescription.id = "section-description" + addSection.cnt;
+                theDescription.innerHTML = document.getElementById("section-description").value;
+                
+                aChild.id = "section" + addSection.cnt;
+                aChild.innerHTML = "<legend>" + document.getElementById("section-title").value + "</legend>";
+                aChild.appendChild(theDescription);
+                
+                theForm.appendChild(aChild);
+                document.getElementById("section-title").value = "";
+                document.getElementById("section-description").value = "";
+                
+               document.getElementById("hls-container").innerHTML += "<label for='hls" + addSection.cnt + "'>" + addSection.cnt + "</label> : <input type='radio' name='hls' id='hls'" + addSection.cnt + "' value='" + addSection.cnt + "' checked />";
+            }
+            
+            function addTextInput() {
+                
+            }
+            
+        </script>
+        
+    </head>
+    <body>
+        <div id="container">
+            <div id="left-container">
+                <h1>&Eacute;l&eacute;ments</h1>
+                <div style="position: relative; float: left; width: 90%; left: 5%;">
+                    <details style="background-color: #FFF; border-radius: 5px;" id="new-section-title">
+                        <summary style="background-color: #C8C8C8; width: inherit; border-radius: 5px 5px 0 0;">
+                            Add new section
+                        </summary>
+                        <label for="section-title">Title</label> : <input type="text" id="section-title" placeholder="Title" required />
+                        <br>
+                        <label for="section-description">Description</label> : <textarea id="section-description" style="vertical-align: top;"></textarea>
+                        <br>
+                        <input type="button" style="float: right;" onclick="addSection();" value="ADD" />
+                    </details>
+                    <details style="background-color: #FFF; border-radius: 5px;" id="new-text-title">
+                        <summary style="background-color: #C8C8C8; width: inherit; border-radius: 5px 5px 0 0;">
+                            Add new text input
+                        </summary>
+                        <label for="text-label">Label</label> : <input type="text" id="section-title" placeholder="Title" required />
+                        <br>
+                        <label for="section-description">Description</label> : <textarea id="section-description" style="vertical-align: top;"></textarea>
+                        <br>
+                        <input type="button" style="float: right;" onclick="addSection();" value="ADD" />
+                    </details>
+                </div>
+            </div>
+            <div id="right-container">
+                <div id="hls-container">
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
