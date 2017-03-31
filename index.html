@@ -8,163 +8,9 @@
         <meta name="kerywords" content="AJIR,Junior-Entreprise,INSA,ROUEN,FORMULAIRES" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Creation de formulaire | Association Junior-Entreprise de l'INSA de Rouen</title>
-        <!--
-        <link rel="stylesheet" type="text/css" href="../stylesheets/.css" />
-        <link rel="stylesheet" type="text/css" href="../stylesheets/.css" /> 
-        <link rel="icon" type="image/png" href="../media/.png" />
-        -->
-        <style>
-            #container {
-                position: absolute;
-                width: 100%;
-                height: 100%;
-                left: 0;
-                top: 0;
-            }
-            
-            #left-container {
-                position: relative;
-                float: left;
-                width: 30%;
-                height: inherit;
-                background-color: #004361;
-            }
-            
-            #right-container {
-                position: relative;
-                float: right;
-                width: 70%;
-                height: inherit;
-                background-color: #FFFFFF;
-            }
-            
-            h1 {
-                width: inherit; margin: 10px auto;
-                color: #C8C8C8;
-            }
-            
-            summary::-webkit-details-marker {
-                display: none;
-            }
-            
-            summary:before {
-                content: "+";
-            }
-            
-            details[open] summary:before {
-                content: "-";
-            }
-            
-            details > * {
-                padding-left: 5px;  
-                margin-bottom: 10px ;
-            }
-            
-            #hls-container {
-                display: inline-block;
-                position: absolute;
-                bottom: 0;
-            }
-        </style>
-        <script>
-            function addSection() {
-                "use strict";
-                
-                // Variables declaration
-                var theForm, theSection, theTitle, theDescription, hlscont;
-                
-                // Section counter (private variable)
-                addSection.cnt = ++addSection.cnt || 1;
-                
-                // Variable initialization
-                theForm = document.getElementById("right-container"); // Form container
-                theSection = document.createElement("section"); // New section element for the new section
-                theTitle = document.createElement("textarea"); // New textarea element for the new title
-                theDescription = document.createElement("textarea"); // New textarea element for the new description
-                hlscont = document.getElementById("hls-container"); // Highlight section container
-                
-                // Setting the titles attributes
-                theTitle.id = "section-title" + addSection.cnt;
-                theTitle.setAttribute("placeholder", "Title");
-                
-                // Setting the description attributes
-                theDescription.id = "section-description" + addSection.cnt;
-                theDescription.setAttribute("placeholder", "Description (optional)");
-                
-                // Setting the new section attributes and appending title and description
-                theSection.id = "section" + addSection.cnt;
-                theSection.appendChild(theTitle);
-                theSection.innerHTML += "<br>";
-                theSection.appendChild(theDescription);
-                
-                // Adding section to hls section and changing the current highlighted section to the new section
-                hlscont.innerHTML += "<label for='hls" + addSection.cnt + "'>" + addSection.cnt + "</label> : <input type='radio' name='hls' id='hls'" + addSection.cnt + "' value='" + addSection.cnt + "' checked />";
-                
-                // Bind the section to onclick event
-                theSection.addEventListener("onclick", function () {highlight(addSection.cnt);});
-                
-                // Appending to the container
-                theForm.appendChild(theSection);
-                theForm.innerHTML += "<hr>";
-                
-                // Adding a question to the section
-                addQuestion();
-            }
-            
-            function addQuestion() {
-                var sNb = getHLS();
-                theSection = document.getElementById("section" + sNb);
-                theContainer = document.createElement("div");
-                theQuestion = document.createElement("textarea");
-                theAnswer = document.createElement("div");
-                theLabel = document.createElement("textarea");
-                qNb = theSection.children.length - 2;
-                
-                theContainer.id = "qcont" + sNb + qNb;
-                
-                theQuestion.id = "question" + sNb + qNb;
-                theQuestion.setAttribute("placeholder", "Question");
-                
-                theAnswer.id = "answer" + sNb + qNb + 1;
-                theAnswer.style.cssText = "width: 10px; height: 10px; border: 1px solid black; border-radius: 5px; vertical-align: middle; display: inline-block;";
-                theAnswer.setAttribute("value", "opt1");
-                
-                theLabel.id = "label" + sNb + qNb + 1;
-                theLabel.style.cssText = "vertical-align: middle;";
-                theLabel.innerHTML = "Option 1";
-                
-                theContainer.appendChild(theQuestion);
-                theContainer.innerHTML += "<br>";
-                theContainer.appendChild(theAnswer);
-                theContainer.appendChild(theLabel);
-                theSection.appendChild(theContainer);
-                
-            }
-            
-            function addTitle() {
-                
-            }
-            
-            function addImage() {
-                
-            }
-            
-            function addVideo() {
-                
-            }
-            
-            function getHLS() {
-                "use strict";
-                var i = 0, sections;
-                sections = document.getElementById("hls-container").getElementsByTagName("input");
-                while (!(sections[i].checked) && i < sections.length) ++i;
-                return (i >= sections.length ? -1 : i + 1);
-            }
-            
-            function highlight(sNb) {
-                document.getElementById("hls" + sNb).checked = true;
-            }
-        </script>
+        <link rel="stylesheet" type="text/css" href="style.css" />
+        <script src="createForm.js"></script>
+        <script src="validateForm.js"></script>
         
     </head>
     <body onload="addSection();">
@@ -181,10 +27,16 @@
                     <button type="button" onclick="addImage();">+ Add Image</button>
                     <br>
                     <button type="button" onclick="addVideo();">+ Add Video</button>
+                    <br>
+                    <!-- <button type="button" onclick="mentir();">+ Add a lie</button>
+                    <br> -->
+                    <div id="esto">
+                        
+                    </div>
                 </div>
             </div>
-            <div id="right-container">
-                <div id="hls-container">
+            <div id="right-container" style="overflow-y: scroll;">
+                <div id="hls-container" style="position: fixed;">
                 </div>
             </div>
         </div>
