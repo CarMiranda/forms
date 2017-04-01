@@ -1,11 +1,31 @@
+/*jslint plusplus : true*/
+
 // Translates the HTML elements in the form preview to HTTP parameters
 function html2Params() {
     "use strict";
-    var theSections = document.getElementsByTagName("section"), params = "", i;
-    params += "nbSections=" + theSections.length;
-    for (i = 1; i <= theSections.length; i += 1) {
+    var theSections, theQuestions, aQuestion, theAnswers, sNb, qNb, aNb, params, i, j, k;
+    theSections = document.getElementsByTagName("section");
+    sNb = theSections.length;
+    params = "nbSections=" + sNb;
+    for (i = 1; i <= sNb; ++i) {
         params += "&title" + i + "=" + encodeURIComponent(document.getElementById("section-title" + i).value);
         params += "&description" + i + "=" + encodeURIComponent(document.getElementById("section-description" + i).value);
+        
+        theQuestions = document.getElementsByName("questions" + i);
+        qNb = theQuestions.length;
+        
+        params += "&qNb" + i + "=" + qNb;
+        for (j = 1; j <= qNb; ++j) {
+            params += "&question" + i + j + "=" + encodeURIComponent(theQuestions[j - 1].value);
+            
+            theAnswers = document.getElementsByName("answers" + i + j);
+            aNb = theAnswers.length;
+            
+            params += "&aNb" + i + j + "=" + aNb;
+            for (k = 1; k <= aNb; ++k) {
+                params += "&answer" + i + j + k + "=" + encodeURIComponent(document.getElementById("label" + i + j + k).value);
+            }
+        }
     }
     return params;
 }
@@ -32,48 +52,23 @@ function validateForm() {
 // Saves the form, triggering validateForm and sending the HTTP data to a PHP script
 function saveForm() {
     "use strict";
-    var getThroughWithThisShit = validateForm(), doc, lel;
-    if (getThroughWithThisShit === 0) {
+    var isValid = validateForm(), doc, HTTPParams;
+    if (isValid === 0) {
         doc = new XMLHttpRequest();
-        lel = html2Params();
+        HTTPParams = html2Params();
         doc.onreadystatechange = function () {
             if (this.readyState === 4 && this.status === 200) {
-                document.getElementById("esto").innerHTML = doc.responseText;
+                console.log("Saved successfuly.");
             }
         };
-        doc.open("POST", "validate.php", true);
+        doc.open("POST", "form2XML.php", true);
         doc.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        doc.send(lel);
+        doc.send(HTTPParams);
     } else {
-        if (getThroughWithThisShit === 1) {
+        if (isValid === 1) {
             window.alert("Missing title");
-        } else if (getThroughWithThisShit === 2) {
+        } else if (isValid === 2) {
             window.alert("Missing question");
         }
     }
 }
-
-/* var aSection = [];
-
-function Section(sNb) {
-    this.id : "section" + sNb;
-    this.title : "";
-    this.description : "";
-    this.questions = new aQuestions(sNb);
-
-    this.setTitle = function (sTitle) {
-        this.title = sTitle;
-    }
-
-    this.setDescription = function (sDescription) {
-        this.description = sDescription;
-    }
-
-    this.addQuestion = function (e) {
-        this.questions.push(new Question(e));
-    }
-}
-
-function Question(sNb, qNb) {
-
-}*/

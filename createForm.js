@@ -11,6 +11,17 @@ function getHLS() {
     return (i >= sections.length ? -1 : i + 1);
 }
 
+function reId(sNb, qNb, caNb) {
+    var theAnswers = document.getElementsByName("answers" + sNb + qNb), aNb, i, j;
+    aNb = theAnswers.length;
+    for (i = caNb, j = caNb + 1; i <= aNb; ++i, ++j) {
+        document.getElementById("acont" + sNb + qNb + j).id = "acont" + sNb + qNb + i; 
+        document.getElementById("answer" + sNb + qNb + j).id = "answer" + sNb + qNb + i;
+        document.getElementById("label" + sNb + qNb + j).id = "label" + sNb + qNb + i; 
+        document.getElementById("minus" + sNb + qNb + j).id = "minus" + sNb + qNb + i; 
+    }
+}
+
 /* Function to highlight a section */
 function highlight(sNb) {
     "use strict";
@@ -37,6 +48,7 @@ function addOption(sNb, qNb) {
     theAnswer.setAttribute("value", "opt" + aNb);
 
     theLabel.id = "label" + sNb + qNb + aNb;
+    theLabel.name = "answers" + sNb + qNb;
     theLabel.innerHTML = "Option " + aNb;
     theLabel.setAttribute("placeholder", "Option");
     theLabel.setAttribute("class", "labels");
@@ -69,13 +81,14 @@ function addQuestion() {
     theQContainer = document.createElement("div");
     theQuestion = document.createElement("textarea");
     thePlus = document.createElement("img");
-    qNb = theSection.children.length - 2;
+    qNb = (theSection.children.length - 1) / 2;
 
     // Setting up the question container
     theQContainer.id = "qcont" + sNb + qNb;
 
     // Setting up the question
     theQuestion.id = "question" + sNb + qNb;
+    theQuestion.name = "questions" + sNb;
     theQuestion.setAttribute("placeholder", "Question");
     theQuestion.setAttribute("rows", 1);
 
@@ -152,8 +165,10 @@ function addSection() {
 /* Function to remove an Option element of the form preview */
 function removeOption(e) {
     "use strict";
+    var id = e.id.substr(5, 3).split('');
     e.parentNode.removeChild(e.nextElementSibling);
     e.parentNode.removeChild(e);
+    reId(parseInt(id[0]), parseInt(id[1]), parseInt(id[2]));
 }
 
 /* Function to add a new Title element to the form preview */
