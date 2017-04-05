@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+
+<html>
+    
+    <head>
+        <meta charset="utf-8" />
+        <meta name="description" content="Widgets AJIR" />
+        <meta name="kerywords" content="AJIR,Junior-Entreprise,INSA,ROUEN,WIDGETS" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Vitrine Widgets | Association Junior-Entreprise de l'INSA de Rouen</title>
+        <style>
+            textarea {
+                border: none;
+                resize: none;
+            }
+            
+            textarea:focus {
+                outline: none;
+                border-bottom: 1px solid black;
+            }
+            
+            div.radiobox, div.checkbox {
+                width: 10px;
+                height: 10px;
+                border: 1px solid black;
+                vertical-align: middle;
+                display: inline-block;
+                margin: 0 10px;
+            }
+            
+            div.radiobox {
+                border-radius: 5px;
+            }
+        </style>
+        
+    </head>
+    <body>
+        <div id="container">
+            <fieldset>
+                <legend>Short-answer text</legend>
+                <div id="qcont1" name="qcont" data-type="saText">
+                    <textarea placeholder="Question" rows="1"></textarea>
+                    <br>
+                    <textarea placeholder="Description" rows="1"></textarea>
+                    <br>
+                    <div id="acont1" name="acont">
+                        <textarea placeholder="Short-answer text" rows="1"></textarea>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+            <legend>Long-answer text</legend>
+                <div id="qcont2" name="qcont" data-type="laText">
+                    <textarea placeholder="Question" rows="1"></textarea>
+                    <br>
+                    <textarea placeholder="Description" rows="1"></textarea>
+                    <br>
+                    <div id="acont2" name="acont">
+                        <textarea placeholder="Long-answer text" rows="1"></textarea>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>Radio</legend>
+                <div id="qcont3" name="qcont" data-type="radio">
+                    <textarea placeholder="Question" rows="1"></textarea>
+                    <br>
+                    <textarea placeholder="Description" rows="1"></textarea>
+                    <br>
+                    <div id="acont3" name="acont">
+                        <div class="radiobox"></div> <textarea rows="1">Option 1</textarea>
+                        <br>
+                        <div class="radiobox"></div> <textarea rows="1">Option 2</textarea>
+                        <br>
+                        <div class="radiobox"></div> <textarea rows="1">Option 3</textarea>
+                        <br>
+                        <div class="radiobox"></div> <span onclick="//addRadioboxOption();">Add another option or <a onclick="//addRadioboxOther();">ADD OTHER</a></span>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>Checkboxes</legend>
+                <div id="qcont4" name="qcont" data-type="checkbox">
+                    <textarea placeholder="Question" rows="1"></textarea>
+                    <br>
+                    <textarea placeholder="Description" rows="1"></textarea>
+                    <br>
+                    <div id="acont4" name="acont">
+                        <div class="checkbox"></div> <textarea rows="1">Option 1</textarea>
+                        <br>
+                        <div class="checkbox"></div> <textarea rows="1">Option 2</textarea>
+                        <br>
+                        <div class="checkbox"></div> <textarea rows="1">Option 3</textarea>
+                        <br>
+                        <div class="checkbox"></div> <span onclick="//addCheckboxOption();">Add another option or <a onclick="//addCheckboxOther();">ADD OTHER</a></span>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>Dropdown</legend>
+                <div id="qcont5" name="qcont" data-type="dropdown">
+                    <textarea placeholder="Question" rows="1"></textarea>
+                    <br>
+                    <textarea placeholder="Description" rows="1"></textarea>
+                    <br>
+                    <div id="acont5" name="acont">
+                        <ol>
+                            <li><textarea rows="1">Option 1</textarea></li>
+                            <li><textarea rows="1">Option 2</textarea></li>
+                            <li><textarea rows="1">Option 3</textarea></li>
+                            <li><a onclick="//addDropdownOption();">Add another option</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>Linear Scale</legend>
+                <div id="qcont6" name="qcont"  data-type="linear">
+                    <textarea placeholder="Question" rows="1"></textarea>
+                    <br>
+                    <textarea placeholder="Description" rows="1"></textarea>
+                    <br>
+                    <div id="acont6" name="acont">
+                        <select>
+                            <option>Integer (0, 1, 2, 3, etc)</option>
+                            <option>Real (0, 0.01, 0.02, 0.03, etc)</option>
+                            <option>Alphabet (a, b, c, d, etc)</option>
+                        </select>
+                        <br>
+                        <textarea placeholder="Min" rows="1" cols="5"></textarea> to <textarea placeholder="Max" rows="1" cols="5"></textarea>
+                        <br>
+                        <div style="display: inline-block;">Min</div> <textarea rows="1" placeholder="Label (optional)"></textarea>
+                        <br>
+                        <div style="display: inline-block;">Max</div> <textarea rows="1" placeholder="Label (optional)"></textarea>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>Date</legend>
+                <div id="qcont7" name="qcont"  data-type="dateInt">
+                    <textarea placeholder="Question" rows="1"></textarea>
+                    <br>
+                    <textarea placeholder="Description" rows="1"></textarea>
+                    <br>
+                    <div id="acont7" name="acont">
+                        <div>Start date</div>
+                        <div>End date</div>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>Date Interval</legend>
+                <div id="qcont8" name="qcont"  data-type="dateInt">
+                    <textarea placeholder="Question" rows="1"></textarea>
+                    <br>
+                    <textarea placeholder="Description" rows="1"></textarea>
+                    <br>
+                    <div id="acont8" name="acont">
+                        <div>Day, month, year</div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+    </body>
+</html>
