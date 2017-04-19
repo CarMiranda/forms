@@ -1,111 +1,308 @@
+body {
+    margin: 0;
+}
+
 /* Page Main Container */
-#container {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    left: 0;
-    top: 0;
+#formContainer {
+    margin-top: 5%; 
+    margin-bottom: 10%;
 }
 
-/* Left Container
- * Contains buttons and information
- * Temporary 
-*/
-#left-container {
-    position: relative;
-    float: left;
-    width: 30%;
-    height: inherit;
+
+/* Top Toolbar */
+/***********/
+div#topTools {
     background-color: #004361;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
 }
 
-/* Right Container
- * Contains the form preview
- * Temporary 
- */
-#right-container {
-    position: relative;
-    float: right;
-    width: 70%;
-    height: inherit;
-    background-color: #FFFFFF;
-}
-
-/* Header for the left container
- * Temporary
- */
-h1 {
-    width: inherit;
-    margin: 10px auto;
-    color: #C8C8C8;
-}
-
-/* Highlighted Section Container */
-#hls-container {
+div#topTools > div {
     display: inline-block;
-    position: absolute;
-    bottom: 0;
+    color: #FFF;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
 }
+
+div#topTools > div > textarea {
+    color: #FFF;
+    background: none;
+    border: none;
+    padding: 10px;
+}
+
+/***********/
+
+/* Side Toolbar */
+/***********/
+div#sideTools {
+    background-color: #EEE;
+    border-radius: 10px;
+    left: 85.5%;
+    padding: 10px 5px;
+    position: absolute;
+    text-align: center;
+    top: 100px;
+    width: 40px;
+}
+
+div#sideTools div * {
+    cursor: pointer ;
+}
+
+img#newQuestion, img#newImage, img#newSection {
+    height: 20px;
+    width: 20px;
+}
+
+img#newTitle {
+    height: 30px;
+    width: 30px;
+}
+
+img#newVideo {
+    height: 25px;
+    width: 25px;
+}
+/***********/
+
+/* Sections for the whole document */
+/***********/
+section {
+    margin: 0 auto;
+    width: 70%;
+}
+
+section.activeSection {
+    border-right: 5px solid #004361;
+    box-shadow: 1px 1px 8px #999;
+}
+
+section:not(.activeSection) {
+    border: 1px solid #DDD;
+}
+/***********/
+
+/* Headers */
+/***********/
+.sectionHeaders {
+    padding: 15px 0px;
+}
+
+.headers {
+    position: relative;
+}
+/***********/
+
+/* Footers */
+/***********/
+.footers {
+    position: relative;
+}
+/***********/
 
 /* Textareas for the whole document */
+/***********/
 textarea {
     border: none;
+    border-bottom: 1px solid #CCC;
+    outline: none;
     resize: none;
-    position: relative;
-    left: 50%;
-    transform: translateX(-50%);
-    border-bottom: 1px solid #DDD;
 }
 
-/* On focus for textareas*/
 textarea:focus {
-    outline: none;  
-    border-bottom: 1px solid #004361;
+    border-bottom: 1px solid #000;
 }
 
-/* Answers/radio-like divs */
-.answers {
-    width: 10px;
-    height: 10px;
-    border: 1px solid black;
-    border-radius: 5px;
-    vertical-align: middle;
-    display: inline-block;
-    margin: 0 10px;
-}
-
-/* Answers/options labels */
-.labels {
-    vertical-align: middle;
-}
-
-/* Answer containers */
-.acont {
-    display: inline-block;
+textarea.sectionTitles {
     position: relative;
     left: 50%;
     transform: translateX(-50%);
+    width: 50%;
+    font-size: 2em;
 }
 
-/* Question containers */
-.qcont {
-    display: inline-block;
+textarea.sectionDescriptions {
     position: relative;
     left: 50%;
     transform: translateX(-50%);
+    width: 40%;
+    font-size: 1.5em;
 }
 
-/* Sections titles and descriptions */
-.section-title, .section-description {
+textarea.questions {
+    font-size: 1.5em;
+    width: 70%;
+}
+
+textarea.descriptions {
+    font-size: 1.25em;
     width: 50%;
 }
+/***********/
 
-/* For vertical line spacing */
-br {
-    line-height: 1.75em;
+/* Question containers */
+/***********/
+div.questionContainers {
+    padding: 10px 50px;
+}
+
+section.activeSection div.activeQuestionContainer {
+    border-left: 5px solid #004361;
+    box-shadow: 1px 1px 8px #999;
+    padding: 10px 45px;
+}
+/***********/
+
+/* Answer elements */
+/***********/
+div.radios, div.checks, div.dropdowns {
+    border: 1px solid #000;
+    display: inline-block;
+    height: 10px;
+    margin: 0 10px;
+    transform: translateY(-50%);
+    vertical-align: middle;
+    width: 10px;
+}
+
+div.radios, div.dropdowns {
+    border-radius: 5px;
+}
+
+div.dropdowns {
+    background-color: #000;
+    height: 5px;
+    width: 5px;
+}
+
+.labels {
+    width: 70%;
+}
+
+.otherTexts {
+    display: inline-block;
+    width: 145px;
+}
+
+.otherClicks {
+    font-weight: 600;
+    color: #004361;
+}
+/***********/
+
+/* Help elements */
+/***********/
+section.activeSection div.activeQuestionContainer div.help  {
+    display: inline-block;
+}
+
+div.help {
+    border: dashed 1px #AAF;
+    color: #77C;
+    cursor: help;
+    display: none;
+    padding: 0 2px;
+}
+
+dialog.helpText {
+    display: none;
+    position: absolute;
+    z-index: 1;
+}
+
+div.help:hover + dialog.helpText {
+    background-color: #FFF;
+    border: 1px solid #AAF;
+    border-radius: 10px;
+    display: inline-block;
+    left: -725px;
+    margin-top: 1.25em;
+    opacity: 1;
+    padding: 5px;
+    position: absolute;
+    width: 300px;
+}
+/***********/
+
+/* Answer Type dropdowns */
+/***********/
+div.answerTypeDropdowns {
+    background-color: #EEE;
+    border-radius: 10px;
+    display: none;
+    padding: 5px;
+    width: 150px;
+    position: absolute;
+    right: 0px;
+    z-index: 2;
+}
+
+section.activeSection div.activeQuestionContainer div.answerTypeDropdowns {
+    display: inline-block;
+}
+
+.answerTypes {
+    display: none;
+    line-height: 28px;
+    padding: 0px 5px;
+}
+
+section.activeSection div.activeQuestionContainer div.activeAnswerType {
+    display: inline;
+}
+
+section.activeSection div.activeQuestionContainer .answerTypeDropdowns:hover .answerTypes {
+    display: block;
+}
+
+section.activeSection div.activeQuestionContainer div.answerTypeDropdowns:hover div.answerTypes:hover {
+    background-color: #CCC;
+    cursor: default;
+}
+/***********/
+
+/***********/
+*:disabled {
+    background-color: #FFF;
 }
 
 /* Style for when a field is missing */
 .missing {
     box-shadow: 0px 0px 5px #C00;
 }
+
+section.activeSection .activeQuestionContainer .requiredOn:before {
+    content: "\2022";
+}
+
+section.activeSection .activeQuestionContainer .requiredOff:before {
+    content: "\25E6";
+}
+
+section.activeSection .activeQuestionContainer .requiredOn {
+    display: block;
+    color: #C00;
+    font-weight: 600;
+}
+
+section.activeSection .activeQuestionContainer .requiredOff {
+    display: block;
+    color: #999;
+    font-weight: 200;
+}
+
+.requiredOn, .requiredOff {
+    display: none;
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    z-index: 1;
+}
+/***********/

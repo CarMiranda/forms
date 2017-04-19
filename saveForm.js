@@ -1,4 +1,5 @@
 /*jslint plusplus : true*/
+/*jslint devel: true */
 
 // Translates the HTML elements in the form preview to HTTP parameters
 function html2Params() {
@@ -58,7 +59,7 @@ function saveForm() {
         HTTPParams = html2Params();
         doc.onreadystatechange = function () {
             if (this.readyState === 4 && this.status === 200) {
-                console.log("Saved successfuly.");
+                console.log(this.responseText);
             }
         };
         doc.open("POST", "form2XML.php", true);
