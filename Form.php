@@ -1,10 +1,14 @@
 <?php
 
+//session_start();
+
 require_once('Exceptions.php');
 require_once('Validation.php');
 require_once('Section.php');
+$config = json_decode(file_get_contents('includes/config.json'), true);
 
-$formsDir = '/tmp';
+
+$formsDir = $config['formsDir'];
 $response = "";
 
 interface IForm {
@@ -65,8 +69,9 @@ class Form implements IForm, IConversion {
     private function fromXML($id) {
         $xml = new DOMDocument();
         $xml->preserveWhiteSpace = false;
+        // Load owner, group and activity from db.
+        // Check for user permissions
         $xml->load("{$GLOBALS['formsDir']}/{$id}.xml");
-        // Load owner, group and activity from db
 
         $this->formId = $id;
         $this->title = $xml->firstChild->firstChild->textContent;
@@ -254,14 +259,6 @@ class Form implements IForm, IConversion {
     }
 
     /* End: Getters and setters */
-}
-
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $form = new Form($_POST);
-    $form->saveXML();
-} else if ($_SERVER["REQUEST_METHOD"] === "GET") {
-    $form = new Form($_GET["fId"]);
-    echo $form->toHTML();
 }
 
 ?>

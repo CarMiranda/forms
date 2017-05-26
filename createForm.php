@@ -1,10 +1,13 @@
 <?php
     $name = "Untitled Form";
+
+    // Get this info from Session once the user has logged
     $owner = "Myself";
     $group = "Group";
 ?><!DOCTYPE html>
 
 <html>
+    
     <head>
         <meta charset="utf-8" />
         <meta name="description" content="Creation de formulaires AJIR" />
@@ -19,10 +22,10 @@
         <div id="topTools">
             <div>
                 <textarea id="formTitle" rows="1"><?php echo $name ?></textarea>
+
                 <textarea id="formOwner" rows="1"><?php echo $owner ?></textarea>
+
                 <textarea id="formGroup" rows="1"><?php echo $group ?></textarea>
-            </div>
-            <div id="status">
             </div>
         </div>
         <div id="formContainer">

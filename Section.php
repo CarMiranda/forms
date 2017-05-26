@@ -68,7 +68,7 @@ class Section implements ISection, IConversion {
 
     /* Start: Conversion methods */
     public function toHTML() {
-        $str = "<section id='{$this->SNb}'>";
+        $str = "<section id='{$this->sNb}' class='sections'>";
         $str .= "<h2>{$this->sTitle}</h2>";
         $str .= "<h4>{$this->sDescription}</h4>";
         for ($i = 0; $i < $this->nbQ; ++$i) {

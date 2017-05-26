@@ -6,18 +6,6 @@ require_once('Option.php');
 
 class QuestionUtils {
 
-    // fn(string, Question) : boolean
-    public static function isUnique($txt, $question) {
-        $nbO = $question->getNbO();
-        $id = hash("crc32", $txt);
-        for ($i = 0; $i < $nbO; ++$i) {
-            if ($question->getOptionId($i) === $id) {
-                return false;
-            }
-        }
-        return true;
-    }
-
 }
 
 interface IQuestion {

@@ -1,6 +1,4 @@
 {
-    "lang" : "en",
-
     "id_max_length" : 10,
     "allow_empty_title" : false,
     "title_max_length" : 50,
@@ -11,5 +9,4 @@
     "allow_empty_questions" : false,
     "allow_empty_qDescriptions" : true,
     "allow_empty_options" : false
-    
 }
