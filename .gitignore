@@ -1,4 +1,6 @@
 *.xml
-formsxml\/
-\[CR\]*
-\[Maquette\]*
+doc/CR/
+doc/Maquette/
+doc/SQL/
+data/
+*[Tt]est*

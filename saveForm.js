@@ -1,68 +1,164 @@
 /*jslint plusplus : true*/
 /*jslint devel: true */
 
-// Translates the HTML elements in the form preview to HTTP parameters
-function html2Params() {
+function sTitleParam(sNb, str) {
     "use strict";
-    var theSections, theQuestions, aQuestion, theAnswers, sNb, qNb, aNb, params, i, j, k;
-    theSections = document.getElementsByTagName("section");
-    sNb = theSections.length;
-    params = "nbSections=" + sNb;
-    for (i = 1; i <= sNb; ++i) {
-        params += "&title" + i + "=" + encodeURIComponent(document.getElementById("section-title" + i).value);
-        params += "&description" + i + "=" + encodeURIComponent(document.getElementById("section-description" + i).value);
+    return "&sTitle" + sNb + "=" + encodeURIComponent(str).replace("%20", "+");
+}
+
+function sDescriptionParam(sNb, str) {
+    "use strict";
+    return "&sDescription" + sNb + "=" + encodeURIComponent(str).replace("%20", "+");
+}
+
+function questionParam(sNb, qNb, str) {
+    "use strict";
+    return "&question" + sNb + "_" + qNb + "=" + encodeURIComponent(str).replace("%20", "+");
+}
+
+function descriptionParam(sNb, qNb, str) {
+    "use strict";
+    return "&description" + sNb + "_" + qNb + "=" + encodeURIComponent(str).replace("%20", "+");
+}
+
+function aTypeParam(sNb, qNb, str) {
+    "use strict";
+    return "&answerType" + sNb + "_" + qNb + "=" + encodeURIComponent(str).replace("%20", "+");
+}
+
+function requiredParam(sNb, qNb, str) {
+    "use strict";
+    return "&required" + sNb + "_" + qNb + "=" + (encodeURIComponent(str).replace("%20", "+") === "true" ? 1 : 0);
+}
+
+function patternParam(sNb, qNb, str) {
+    "use strict";
+    return "&pattern" + sNb + "_" + qNb + "=" + encodeURIComponent(str).replace("%20", "+");
+}
+
+function optionParam(sNb, qNb, oNb, str) {
+    "use strict";
+    return "&option" + sNb + "_" + qNb + "_" + oNb + "=" + encodeURIComponent(str).replace("%20", "+");
+}
+
+// Translates the HTML elements in the form preview to HTTP parameters
+function formConversion() {
+    "use strict";
+    var fTitle, fOwner, fGroup, sections, questions, descriptions, aContainer, aType, options, nbS, nbQ, nbO, params, i, ri, j, rj, k, rk;
+    sections = document.getElementsByTagName("section");
+    nbS = sections.length;
+    fTitle = document.getElementById("formTitle").value;
+    fOwner = document.getElementById("formOwner").value;
+    fGroup = document.getElementById("formGroup").value;
+    
+    params = "fId=1&fTitle=" + encodeURIComponent(fTitle).replace("%20", "+") + "&fOwner=" + encodeURIComponent(fOwner).replace("%20", "+") + "&fGroup=" + encodeURIComponent(fGroup).replace("%20", "+") + "&nbS=" + nbS;
+    for (i = 0; i < nbS; ++i) {
+        params += sTitleParam(i, sections[i].querySelector(".sectionTitles").value);
+        params += sDescriptionParam(i, sections[i].querySelector(".sectionDescriptions").value);
         
-        theQuestions = document.getElementsByName("questions" + i);
-        qNb = theQuestions.length;
+        questions = sections[i].querySelectorAll(".questions");
+        descriptions = sections[i].querySelectorAll(".descriptions");
+        aContainer = sections[i].querySelectorAll(".answerContainers");
+        nbQ = questions.length;
         
-        params += "&qNb" + i + "=" + qNb;
-        for (j = 1; j <= qNb; ++j) {
-            params += "&question" + i + j + "=" + encodeURIComponent(theQuestions[j - 1].value);
+        params += "&nbQ" + i + "=" + nbQ;
+        for (j = 0; j < nbQ; ++j) {
+            params += questionParam(i, j, questions[j].value);
+            params += descriptionParam(i, j, descriptions[j].value);
+            aType = aContainer[j].dataset.type;
+            params += aTypeParam(i, j, aType);
+            params += requiredParam(i, j, aContainer[j].dataset.required);
             
-            theAnswers = document.getElementsByName("answers" + i + j);
-            aNb = theAnswers.length;
-            
-            params += "&aNb" + i + j + "=" + aNb;
-            for (k = 1; k <= aNb; ++k) {
-                params += "&answer" + i + j + k + "=" + encodeURIComponent(document.getElementById("label" + i + j + k).value);
+            if (["radio", "check", "dropdown"].indexOf(aType) > -1) {
+                options = aContainer[j].querySelectorAll(".labels");
+                nbO = options.length;
+
+                params += "&nbO" + i + j + "=" + nbO;
+                for (k = 0; k < nbO; ++k) {
+                    params += optionParam(i, j, k, options[k].value);
+                }
+                if (aContainer[j].lastChild.previousSibling.dataset.isset) {
+                    params += "&other" + i + j + "=1";
+                } else {
+                    params += "&other" + i + j + "=0";
+                }
+            } else if (aType === "pattern") {
+                params += patternParam(i, j, aContainer[j].firstChild.value);
             }
         }
     }
     return params;
 }
 
-// Checks form validity
-function validateForm() {
+function formValidation() {
     "use strict";
-    var titles = document.getElementsByName("title"), questions = document.getElementsByName("question"), i, len = titles.length;
-    for (i = 0; i < len; i += 1) {
-        if (titles[i].value === "") {
-            // title.class += " missing";
-            return 1;
+    var valid, fTitle, fOwner, fGroup, sTitles, sDescriptions, questions, descriptions, str;
+    valid = 0;
+    fTitle = document.getElementById("formTitle");
+    fOwner = document.getElementById("formOwner");
+    fGroup = document.getElementById("formGroup");
+    sTitles = document.getElementsByName("sectionTitles");
+    sDescriptions = document.getElementsByName("sectionDescriptions");
+    questions = document.getElementsByName("questions");
+    descriptions = document.getElementsByName("descriptions");
+    //patterns = document.getElementsByName("patterns");
+    //options = document.getElementsByName("options");
+    if (fTitle.value === "") {
+        valid++;
+    }
+    if (fOwner.value === "") {
+        valid++;
+    }
+    if (fGroup.value === "") {
+        valid++;
+    }
+    for (str of sTitles) {
+        if (str.value === "") {
+           valid++;
         }
     }
-    len = questions.length;
-    for (i = 0; i < len; i += 1) {
-        if (questions[i].value === "") {
-            return 2;
+    for (str of sDescriptions) {
+        if (str.value === "") {
+            valid++;
         }
     }
-    return 0;
+    for (str of questions) {
+        if (str.value === "") {
+            valid++;
+        }
+    }
+    for (str of descriptions) {
+        if (str.value === "") {
+            valid++;
+        }
+    }
+    /*for (str of patterns) {
+        if (str.value === "") {
+            valid++;
+        }
+    }*/
+    /*for (str of options) {
+        if (str.value === "") {
+            valid++;
+        }
+    }*/
+
+    return valid;
 }
 
 // Saves the form, triggering validateForm and sending the HTTP data to a PHP script
 function saveForm() {
     "use strict";
-    var isValid = validateForm(), doc, HTTPParams;
+    var isValid = formValidation(), doc, HTTPParams;
     if (isValid === 0) {
         doc = new XMLHttpRequest();
-        HTTPParams = html2Params();
+        HTTPParams = formConversion();
         doc.onreadystatechange = function () {
             if (this.readyState === 4 && this.status === 200) {
                 console.log(this.responseText);
             }
         };
-        doc.open("POST", "form2XML.php", true);
+        doc.open("POST", "Form.php", true);
         doc.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         doc.send(HTTPParams);
     } else {

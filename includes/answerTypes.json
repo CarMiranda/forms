@@ -1,0 +1,7 @@
+{
+    "answerTypes" : [
+        "short", "long", "radio",
+        "check", "pattern", "dropdown",
+        "date", "dateInt"
+    ]
+}

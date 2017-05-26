@@ -1,0 +1,46 @@
+{
+    "helpText" : {
+        "en" : {
+            "short" : "Enter a question and a description (optional). The user will be asked to input a short answer (max. 100 characters).",
+            "long" : "Enter a question and a description (optional). The user will be asked to input a long answer (max. 1500 characters).",
+            "radio" : "Enter a question and a description (optional). The user will have to choose exactly one option.",
+            "check" : "Enter a question and a description (optional). The user will have to choose one or more options.",
+            "pattern" : "Enter a question and a description (optional). The user will have to provide an input matching a pattern.<br>Pattern instructions: # is a digit, A is a letter, - is the field separator.<br>E.g. 12-LE21 matches the pattern ##-AA##.",
+            "dropdown" : "Enter a question and a description (optional). The user will have to choose exactly one option.",
+            "date" : "Enter a question and a description (optional). The user will have to provide a valid date.",
+            "dateInt" : "Enter a question and a description (optional). The user will have to provide a valid date interval."
+        },
+        
+        "fr" : {
+            "short" : "Entrez une question et une description (facultative). L'utilisateur devra écrire une réponse courte (max. 100 caractères).",
+            "long" : "Entrez une question et une description (facultative). L'utilisateur devra écrire une réponse longue (max. 1500 caractères).",
+            "radio" : "Entrez une question et une description (facultative). L'utilisateur devra choisir exactement une réponse.",
+            "check" : "Entrez une question et une description (facultative). L'utilisateur devra choisir au moins une réponse.",
+            "pattern" : "Entrez une question et une description (facultative). L'utilisateur devra écrire une réponse validant le motif. Consignes pour le motif: # est un chiffre, A est une lettre, - est le séparateur de champs. E.g. 12-LE21 valide le motif ##-AA##.",
+            "dropdown" : "Entrez une question et une description (facultative). L'utilisateur devra choisir exactement une réponse.",
+            "date" : "Entrez une question et une description (facultative). L'utilisateur devra renseigner une date valide.",
+            "dateInt" : "Entrez une question et une description (facultative). L'utilisateur devra renseigner un intervalle de dates valide."
+        }
+    },
+
+    "placeholdersText" : {
+        "en" : {
+            "title" : "Title",
+            "description" : "Description (optional)",
+            "question" : "Question",
+            "short" : "Short answer...",
+            "long" : "Long answer...",
+            "pattern" : "Enter pattern",
+            "another" : "Add another option"
+        },
+        "fr" : {
+            "title" : "Titre",
+            "description" : "Description (facultative)",
+            "question" : "Question",
+            "short" : "Réponse courte...",
+            "long" : "Réponse longue...",
+            "pattern" : "Entrez un motif",
+            "another" : "Ajouter une option"
+        }
+    }
+}
