@@ -1,6 +1,3 @@
-/*jslint plusplus : true*/
-/*jslint devel: true */
-
 function sTitleParam(sNb, str) {
     "use strict";
     return "&sTitle" + sNb + "=" + encodeURIComponent(str).replace("%20", "+");
@@ -34,6 +31,16 @@ function requiredParam(sNb, qNb, str) {
 function patternParam(sNb, qNb, str) {
     "use strict";
     return "&pattern" + sNb + "_" + qNb + "=" + encodeURIComponent(str).replace("%20", "+");
+}
+
+function nbOParam(sNb, qNb, str) {
+    "use strict";
+     return "&nbO" + sNb + "_" + qNb + "=" + encodeURIComponent(str).replace("%20", "+");
+}
+
+function otherParam(sNb, qNb, str) {
+    "use strict";
+     return "&other" + sNb + "_" + qNb + "=" + encodeURIComponent(str).replace("%20", "+");
 }
 
 function optionParam(sNb, qNb, oNb, str) {
@@ -73,14 +80,14 @@ function formConversion() {
                 options = aContainer[j].querySelectorAll(".labels");
                 nbO = options.length;
 
-                params += "&nbO" + i + j + "=" + nbO;
+                params += nbOParam(i, j, nbO);
                 for (k = 0; k < nbO; ++k) {
                     params += optionParam(i, j, k, options[k].value);
                 }
                 if (aContainer[j].lastChild.previousSibling.dataset.isset) {
-                    params += "&other" + i + j + "=1";
+                    params += otherParam(i, j, 1);
                 } else {
-                    params += "&other" + i + j + "=0";
+                    params += otherParam(i, j, 0);
                 }
             } else if (aType === "pattern") {
                 params += patternParam(i, j, aContainer[j].firstChild.value);

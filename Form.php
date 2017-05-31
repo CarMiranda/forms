@@ -145,7 +145,7 @@ class Form implements IForm, IConversion {
                         for ($k = 0; $k < $nbO; ++$k) {
                             $question->addOption($data["option{$i}_{$j}_{$k}"]);
                         }
-                        if (isset($data["other{$i}{$j}"]) && $data["other{$i}_{$j}"]) {
+                        if (isset($data["other{$i}_{$j}"]) && $data["other{$i}_{$j}"]) {
                             $question->setOther(TRUE);
                         }
                     break;
